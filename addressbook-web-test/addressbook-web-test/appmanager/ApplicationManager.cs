@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -12,7 +13,7 @@ namespace WebAddressbookTests
 {
     public class ApplicationManager
     {
-        public IWebDriver driver;
+        protected IWebDriver driver;
         protected string baseURL;
 
         protected LoginHelper loginHelper;
@@ -20,14 +21,27 @@ namespace WebAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost/addressbook";
+            baseURL = "http://localhost";
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                ApplicationManager newInstans = new ApplicationManager();
+                newInstans.Navigator.GoToHomePage();
+                app.Value = newInstans;
+            }
+            return app.Value;
         }
 
         public IWebDriver Driver

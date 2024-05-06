@@ -10,9 +10,10 @@ namespace WebAddressbookTests
     {
         private string firstname;
         private string lastname = "";
-        public ContactData(string firstname)
+        public ContactData(string firstname, string v)
         {
             this.firstname = firstname;
+            this.lastname = lastname;
         }
 
         public string FirstName

@@ -8,15 +8,18 @@ namespace WebAddressbookTests
 
 {
     [TestFixture]
-    public class AccountModifyTests : TestBase
+    public class ContactModifyTests : AuthTestBase
     {
         [Test]
-        public void AccountModifyTest()
+        public void ContactModifyTest()
         {
-            ContactData newContact = new ContactData("Test1");
-            newContact.LastName = "Test2";
-
-            app.Contacts.Modify(1, newContact);
+            ContactData newContact = new ContactData("Name123", "LastName123");
+            if (app.Contacts.NoContactToSelected())
+            {
+                app.Contacts.CreateContact(newContact);
+            }
+            ContactData contact = new ContactData("TEST1", "LastName2");
+            app.Contacts.Modify(1, newContact, contact);
 
         }
     }

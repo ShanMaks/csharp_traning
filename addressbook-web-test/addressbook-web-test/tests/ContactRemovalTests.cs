@@ -8,13 +8,18 @@ namespace WebAddressbookTests
 
 {
     [TestFixture]
-    public class ContactRemovalTest : TestBase
+    public class ContactRemovalTests : AuthTestBase
     {
         [Test]
-        public void AccountModifyTest()
+        public void ContactRemovalTest()
         {
-            app.Groups.Remove(1);
-            app.Auth.Logout();
+            ContactData newData = new ContactData("TestName123", "TestLastName123");
+
+            if (app.Contacts.NoContactToSelected())
+            {
+                app.Contacts.CreateContact(newData);
+            }
+            app.Contacts.Remove(1);
         }
     }
 }

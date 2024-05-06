@@ -7,14 +7,21 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : TestBase
+    public class GroupRemovalTests : AuthTestBase
     {
 
         [Test]
         public void GroupRemovalTest()
         {
+            GroupData group = new GroupData("Тест1");
+            group.Header = "Тест2";
+            group.Footer = "Тест3";
+
+            if (app.Groups.NoGroupToSelected())
+            {
+                app.Groups.Create(group);
+            }
             app.Groups.Remove(1);
-            app.Auth.Logout();
         }
     }
 }

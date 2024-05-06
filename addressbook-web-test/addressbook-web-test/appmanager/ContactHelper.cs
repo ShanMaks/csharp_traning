@@ -27,11 +27,11 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData newContactData)
+        public ContactHelper Modify(int v,ContactData newContact, ContactData contact)
         {
             SelectContact(v);
             InitContactModify();
-            FillConctactForm(newContactData);
+            FillConctactForm(contact);
             SubmitConctactModify();
             ReturnToConctactPage();
             return this;
@@ -46,12 +46,8 @@ namespace WebAddressbookTests
 
             public ContactHelper FillConctactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            Type(By.Name("firstname"), contact.FirstName);
+            Type(By.Name("lastname"), contact.LastName);
             return this;
         }
 
@@ -89,6 +85,11 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             return this;
+        }
+
+        public bool NoContactToSelected()
+        {
+            return !IsElementPresent(By.XPath("img[@title = Edit]"));
         }
     }
 }
