@@ -47,5 +47,15 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("add new")).Click();
             driver.Navigate().GoToUrl("http://localhost/addressbook/edit.php");
         }
+
+        public void GoToContactPage()
+        {
+            if (driver.Url == baseURL + "http://localhost/addressbook/edit.php"
+    && IsElementPresent(By.Name("group")))
+            {
+                return;
+            }
+            driver.FindElement(By.LinkText("home")).Click();
+        }
     }
 }

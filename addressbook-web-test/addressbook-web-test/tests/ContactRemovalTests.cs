@@ -22,7 +22,7 @@ namespace WebAddressbookTests
             {
                 app.Contacts.CreateContact(newData);
             }
-            app.Contacts.Remove(1);
+            app.Contacts.Remove(0);
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);

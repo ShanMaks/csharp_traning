@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -16,20 +16,20 @@ namespace WebAddressbookTests
         public void ContactModifyTest()
         {
             ContactData newContact = new ContactData("Name123", "LastName123");
-            ContactData contact = new ContactData("TEST1", "LastName2");
+            ContactData oldContact = new ContactData("TEST1", "LastName2");
+
+            if (app.Contacts.NoContactToSelected() == false)
+            {
+                app.Contacts.CreateContact(oldContact);
+            }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            if (app.Contacts.NoContactToSelected())
-            {
-                app.Contacts.CreateContact(newContact);
-            }
-
-            app.Contacts.Modify(1, newContact, contact);
+            app.Contacts.Modify(1, newContact);
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts[0].FirstName = contact.FirstName;
-            oldContacts[0].LastName = contact.LastName;
+            oldContacts[0].FirstName = newContact.FirstName;
+            oldContacts[0].LastName = newContact.LastName;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);

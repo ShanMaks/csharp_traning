@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace WebAddressbookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstname;
-        private string lastname;
-        public ContactData(string firstname, string v)
+        private string lastname = "";
+        public ContactData(string firstname, string lastname)
         {
             this.firstname = firstname;
             this.lastname = lastname;
@@ -26,26 +27,34 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return firstname == other.firstname;
+            return FirstName == other.FirstName && LastName == other.LastName;
         }
 
         public override int GetHashCode()
         {
-            return firstname.GetHashCode();
+            return (FirstName + LastName).GetHashCode();
         }
 
         public override string ToString()
         {
-            return "name=" + firstname;
+            return "firstname=" + FirstName + " lastname=" + LastName;
         }
 
         public int CompareTo(ContactData other)
         {
-            if (Object.ReferenceEquals(other, null))
+            if (object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return firstname.CompareTo(other.firstname);
+            if (this.FirstName != other.FirstName)
+            {
+                return FirstName.CompareTo(other.FirstName);
+            }
+            if (this.LastName != other.LastName)
+            {
+                return LastName.CompareTo(other.LastName);
+            }
+            return LastName.CompareTo(other.LastName) & FirstName.CompareTo(other.FirstName);
         }
 
         public string FirstName

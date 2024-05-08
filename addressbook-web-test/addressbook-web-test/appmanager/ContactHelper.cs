@@ -21,19 +21,18 @@ namespace WebAddressbookTests
         public ContactHelper CreateContact(ContactData contact)
         {
             manager.Navigator.GoToContactCreation();
-            FillConctactForm(contact);
+            FillContactForm(contact);
             SubmitConctactCreation();
             ReturnToConctactPage();
             return this;
         }
 
-        public ContactHelper Modify(int v,ContactData newContact, ContactData contact)
+        public ContactHelper Modify(int p, ContactData newContact)
         {
-            SelectContact(v);
-            InitContactModify();
-            FillConctactForm(contact);
+            manager.Navigator.GoToHomePage();
+            InitContactModify(p);
+            FillContactForm(newContact);
             SubmitConctactModify();
-            ReturnToConctactPage();
             return this;
         }
 
@@ -44,7 +43,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-            public ContactHelper FillConctactForm(ContactData contact)
+            public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.FirstName);
             Type(By.Name("lastname"), contact.LastName);
@@ -69,9 +68,10 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper InitContactModify()
+        public ContactHelper InitContactModify(int p)
         {
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            p++;
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + p + "]/td[8]/a/img")).Click();
             return this;
         }
 
@@ -96,10 +96,10 @@ namespace WebAddressbookTests
         {
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("img[title=Edit]"));
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactData(element.Text, element.Text));
+                contacts.Add(new ContactData(element.FindElement(By.CssSelector("td:nth-child(3)")).Text, element.FindElement(By.CssSelector("td:nth-child(2)")).Text));
             }
             return contacts;
         }
