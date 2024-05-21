@@ -22,13 +22,13 @@ namespace WebAddressbookTests
         {
             FirstName = firstname;
             LastName = lastname;
-            Address = "asd";
-            MobilePhone = "+7(916)123";
-            WorkPhone = "+7(916) 7-8-9";
-            HomePhone = "+7(916)1 2 3";
-            Email = "test1@test.com";
-            Email_2 = "www@gmail.com";
-            Email_3 = "www@yandex.ru";
+            Address = "";
+            MobilePhone = "";
+            WorkPhone = "";
+            HomePhone = "";
+            Email = "";
+            Email_2 = "";
+            Email_3 = "";
         }
 
         public ContactData()
