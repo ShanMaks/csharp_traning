@@ -55,7 +55,7 @@ namespace WebAddressbookTests
             return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contacts.json"));
         }
 
-        [Test, TestCaseSource("ContactDataFromCsvFile")]
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void TheContactCreationTestsTest(ContactData contacts)
         {
 
