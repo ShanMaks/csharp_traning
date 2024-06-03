@@ -10,7 +10,7 @@ namespace WebAddressbookTests
 
 {
     [TestFixture]
-    public class ContactModifyTests : AuthTestBase
+    public class ContactModifyTests : ContactTestBase
     {
         [Test]
         public void ContactModifyTest()
@@ -23,11 +23,12 @@ namespace WebAddressbookTests
                 app.Contacts.CreateContact(oldContact);
             }
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeModify = oldContacts[0];
 
-            app.Contacts.Modify(1, newContact);
+            app.Contacts.Modify(toBeModify, newContact);
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts[0].FirstName = newContact.FirstName;
             oldContacts[0].LastName = newContact.LastName;
             oldContacts.Sort();

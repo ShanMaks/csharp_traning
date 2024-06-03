@@ -29,10 +29,19 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int p, ContactData newContact)
+        public ContactHelper Modify(int index, ContactData newContact)
         {
             manager.Navigator.GoToHomePage();
-            InitContactModify(p);
+            InitContactModify(index);
+            FillContactForm(newContact);
+            SubmitConctactModify();
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData contact, ContactData newContact)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModify(contact.Id);
             FillContactForm(newContact);
             SubmitConctactModify();
             return this;
@@ -87,10 +96,15 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper InitContactModify(int p)
+        public ContactHelper InitContactModify(int index)
         {
-            p++;
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + p + "]/td[8]/a/img")).Click();
+            driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"))[7].FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModify(string id)
+        {
+            driver.FindElement(By.XPath($"//input[@name='selected[]' and @value='{id}']//..//../td[8]/a")).Click();
             return this;
         }
         public ContactHelper InitContactModification(int index)
