@@ -21,6 +21,13 @@ namespace WebAddressbookTests
             Name = name;
         }
 
+        public GroupData(string name, string header, string footer)
+        {
+            Name = name;
+            Header = header;
+            Footer = footer;
+        }
+
         public bool Equals(GroupData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -77,9 +84,7 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from c in db.Accounts
-                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id)
-                        select c).Distinct().ToList();
+                return (from c in db.Accounts from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id) select c).Distinct().ToList();
             }
         }
     }

@@ -185,5 +185,17 @@ namespace WebAddressbookTests
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+
+        internal void GroupNoToAddAccounts()
+        {
+            List<GroupData> groups = GroupData.GetAll();
+
+            if (groups.Count == 0)
+            {
+                GroupData group = new GroupData("TestName", "TestHeaderName", "TestFooterName");
+
+                Create(group);
+            }
+        }
     }
 }

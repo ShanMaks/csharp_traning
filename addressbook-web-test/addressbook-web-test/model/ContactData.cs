@@ -34,8 +34,8 @@ namespace WebAddressbookTests
         }
 
         public ContactData()
-            {
-            }
+        {
+        }
 
         public bool Equals(ContactData other)
         {
@@ -106,6 +106,9 @@ namespace WebAddressbookTests
 
         [Column(Name = "email3")]
         public string Email_3 { get; set; }
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
 
 
         public string AllPhones
@@ -232,10 +235,10 @@ namespace WebAddressbookTests
 
         private string NextLineDouble(string detail)
         {
-                if (detail == null || detail == "")
-                {
-                    return "";
-                }
+            if (detail == null || detail == "")
+            {
+                return "";
+            }
             return detail + "\r\n\r\n";
         }
 
@@ -253,6 +256,14 @@ namespace WebAddressbookTests
             using (AddressBookDB db = new AddressBookDB())
             {
                 return (from c in db.Accounts select c).ToList();
+            }
+        }
+
+        public static string MaxContactId()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Accounts.Where(x => x.Deprecated == null) select c).Max(y => y.Id);
             }
         }
     }
