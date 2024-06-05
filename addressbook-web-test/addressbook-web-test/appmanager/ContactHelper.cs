@@ -55,6 +55,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            SubmitContactRemove();
+            contactCache = null;
+            return this;
+        }
+
         public ContactHelper FillContactInfo(ContactData contact)
         {
             Type(By.Name("firstname"), contact.FirstName);
@@ -97,6 +106,12 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath($"//input[@name='selected[]' and @value='{id}']")).Click();
             return this;
         }
 
@@ -293,7 +308,6 @@ namespace WebAddressbookTests
                 CreateContact(contact);
             }
         }
-
 
     }
 }

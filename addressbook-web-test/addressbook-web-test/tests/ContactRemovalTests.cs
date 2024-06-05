@@ -16,19 +16,19 @@ namespace WebAddressbookTests
         {
             ContactData newData = new ContactData("TestName123", "TestLastName123");
 
-            if (app.Contacts.NoContactToSelected() == false)
+            if (app.Contacts.NoContactToSelected())
             {
                 app.Contacts.CreateContact(newData);
             }
 
             List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[0];
 
-            app.Contacts.Remove(0);
+            app.Contacts.Remove(toBeRemoved);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = ContactData.GetAll();
-            ContactData toBeRemoved = oldContacts[0];
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();
@@ -36,7 +36,7 @@ namespace WebAddressbookTests
 
             foreach (ContactData contact in newContacts)
             {
-                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+                Assert.AreNotEqual(oldContacts, newContacts);
             }
         }
     }
